@@ -75,6 +75,12 @@
    transition: transform 0.5s ease-out;
  } 
 
+ #suggestions{
+  transform: translateY(-180px);  
+ }
+
+
+ /* slider */
  .input-slider {
   position: relative;
   width: 100%;
@@ -91,3 +97,7 @@
   font-weight: bold;
   color: #004085;
 }
+
+
+/* result style */
+ 

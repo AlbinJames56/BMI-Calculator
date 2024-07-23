@@ -31,29 +31,29 @@
   </head>
   <body>
     <div class="container-fuild  p-5" id="bg-color">
-      <div class="container m-5">
-        <h1 class=" ">Body Mass Index (BMI) Calculator</h1>
-        <p class=" ">
+      <div class="container m-2">
+        <h1 id="textColor">Body Mass Index (BMI) Calculator</h1>
+        <p id="PtextColor">
           The Body Mass Index (BMI) helps in calculating the height-to-weight
           ratio of a person. The score determines if a person is at his/her
           healthy weight or needs to shed or gain more kilos. A BMI calculator
           is widely used as a general tool to assess if a person has a healthy
           body weight proportional to their height.
         </p>
-        <div class="row border p-5 bg-light m-5">
-            <div class="col-md-6">
+        <div class="row border rounded-5 p-5 bg-light m-2">
+            <div class="col-md-6 col-sm-8 px-sm-3">
                 <div class="row">
-                    <div class="col-md-6 mt-5 pt-5 d-flex align-items-center">
+                    <div class="col-md-6 mt-5 d-flex align-items-center">
                         <div class="col-md-4">Gender</div>
                         <div class="col-md-4 middle d-flex">
                         <label class="d-flex align-items-center mr-2">
-                            <input type="radio" name="radio" />
+                            <input type="radio" name="radio" id="gender" checked  />
                             <div class="male box" active>
                             <span>Male</span>
                             </div>
                         </label>
                         <label class="d-flex align-items-center">
-                            <input type="radio" name="radio" />
+                            <input type="radio" name="radio" id="gender" />
                             <div class="Female box">
                             <span>Female</span>
                             </div>
@@ -61,15 +61,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-md-2">Age</div>
-                    <div class="col-md-8"><input type="number" name="age" id="age" class="form-control"></div>
+                    <div class="col-md-5"><input type="number" name="age" id="age" class="form-control" required></div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-4">
                     <div class="col-md-2">Weight</div>
                     <div class="col-md-8 input-slider">
                       <input type="range" min="1" max="200" id="weight" class="form-range" oninput="updateWeightValue(this.value)">
-                      <div class="slider-value" id="weightValue">70 Kg</div>
+                      <div class="slider-value" id="weightValue">100 Kg</div>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -77,7 +77,7 @@
                     
                     <div class="col-md-8 input-slider mb-5">
                       <input type="range" min="50" max="230" id="height" class="form-range" oninput="updateHeightValue(this.value)">
-                      <div class="slider-value" id="heightValue">170 cm</div>
+                      <div class="slider-value" id="heightValue">135 cm</div>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -93,19 +93,25 @@
                     <div class="border rounded bg-info text-light text-center my-auto mx-auto p-1 mt-4" id="bmi">0</div>
                 </div>
                 <div class="scale d-flex justify-content-center p-3">
-                    <img width="400px" src="./images/meter.png" alt="">
+                    <img width="400rem" src="./images/meter.png" alt="">
                 </div>
                 <div class="neddle d-flex justify-content-center p-3">
-                    <img id="needle" width="60px" src="./images/needle.png" alt="">
+                    <img id="needle" width="60rem" src="./images/needle.png" alt="">
+                </div>
+                <div id="suggestions">
+
                 </div>
             </div>
-           
+        <div class="resuly" id="result">
+
+        </div>   
           
         </div>
+        
       </div>
     </div>
     <script>
-
+i
        function updateHeightValue(value) {
     document.getElementById('heightValue').innerText = value + ' cm';
   }
@@ -114,9 +120,15 @@
     document.getElementById('weightValue').innerText = value + ' Kg';
   }
         function calculateBmi(){
+           let gender=document.getElementById("gender").value;
+            var age = document.getElementById("age").value;
+            if(!gender||!age){
+              alert("Please fill all the fields");
+            }else{
+              
             var height = document.getElementById("height").value;
             var weight = document.getElementById("weight").value;
-            var age = document.getElementById("age").value;
+           
             
             var heightInMeter=height/100;
             var bmi = weight / (heightInMeter * heightInMeter);
@@ -141,21 +153,87 @@
       var needle = document.getElementById("needle");
       needle.style.transform = `translateY(-205px) rotate(${angle}deg)`;
 
+      document.getElementById("textColor").style.color="white"
+      document.getElementById("PtextColor").style.color="white"
+      // Change bg color and add text and suggestions according to bmi
       if(bmi<18.5){
         document.getElementById("bg-color").style.backgroundColor="blue"
+        document.getElementById("suggestions").innerHTML=`
+        <h4 class="text-primary text-center">You should eat more!</h4>`
+        document.getElementById('result').innerHTML=`
+        <h1 class="text-primary ml-5">Underweight (BMI <h1 18.5)</h1>
+        <ul class="text-primary ml-5" style="font-size:1.1rem;">
+          <li>Increase Caloric Intake: Consume more calories than you burn. Focus on nutrient-dense foods like nuts, seeds, avocados, whole grains, and lean proteins.</li>
+          <li>Eat Frequently: Have 5-6 small meals throughout the day rather than 2-3 large meals.</li>
+          <li>Protein and Carbohydrates: Include protein-rich foods (chicken, fish, beans) and complex carbohydrates (brown rice, quinoa) in your diet.</li>
+          <li>Healthy Snacks: Snack on high-calorie, healthy foods such as nuts, cheese, and dried fruits.</li>
+          <li>Strength Training: Engage in strength training exercises to build muscle mass, which will help you gain weight in a healthy way.</li>
+          <li>Avoid Empty Calories: Limit sugary and highly processed foods. Focus on getting calories from nutritious sources.</li>
+        </ul>
+        `
       }
-      else if(bmi>=18.5 && bmi<24){
+      else if(bmi>=18.5 && bmi<24.9){
         document.getElementById("bg-color").style.backgroundColor="green"
+        document.getElementById("suggestions").innerHTML=`
+        <h4 class="text-success text-center">Keep it up!</h4>`
+        document.getElementById('result').innerHTML=`
+        <h1 class="text-success ml-5">Normal Weight (BMI 18.5 - 24.9)</h1>
+        <ul class="text-success ml-5" style="font-size:1.1rem;">
+          <li>Balanced Diet: Maintain a balanced diet with a variety of fruits, vegetables, whole grains, lean proteins, and healthy fats.</li>
+          <li>Regular Exercise: Aim for at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous-intensity activity each week, plus muscle-strengthening activities on 2 or more days a week.</li>
+          <li>Hydration: Drink plenty of water throughout the day.</li>
+          <li>Portion Control: Be mindful of portion sizes to avoid overeating.</li>
+          <li>Healthy Lifestyle: Avoid smoking, limit alcohol consumption, and get adequate sleep (7-9 hours per night).</li>
+        </ul>
+        `
         }
-        else if(bmi>=25&&bmi<=29){
+        else if(bmi>=25&&bmi<=29.9){
           document.getElementById("bg-color").style.backgroundColor="yellow"
+          document.getElementById("suggestions").innerHTML=`
+          <h4 class="text-warning text-center">Keep it up!</h4>`
+          document.getElementById('result').innerHTML=`
+          <h1 class="text-warning ml-5">Overweight (BMI 25 - 29.9)</h1>
+          <ul class="text-warning ml-5" style="font-size:1.1rem;">
+            <li>Caloric Deficit: Consume fewer calories than you burn to promote weight loss. Aim for a gradual weight loss of 1-2 pounds per week.</li>
+            <li>Healthy Eating: Focus on whole, unprocessed foods. Avoid sugary drinks and high-calorie, low-nutrient foods.</li>
+            <li>Exercise Regularly: Incorporate both aerobic exercises (like walking, running, cycling) and strength training.</li>
+            <li>Seek Support: Consider joining a weight loss group or working with a dietitian for personalized advice and support.</li>
+            <li>Monitor Progress: Keep a food diary and track your physical activity to stay accountable.</li>
+          </ul>
+          `
         }
         else if(bmi>=30 && bmi<34.9){
           document.getElementById("bg-color").style.backgroundColor="orange"
+          document.getElementById("suggestions").innerHTML=`
+          <h4 class=" text-center" style="color:orange;">You should eat less!</h4>`
+          document.getElementById('result').innerHTML=`
+          <h1 class="  ml-5" style="color:orange;">Obese (BMI 30 - 39.9)</h1>
+          <ul class=" ml-5" style="font-size:1.1rem; color:orange;">
+            <li>Professional Guidance: Work with healthcare providers to develop a personalized weight loss plan.</li>
+            <li>Diet and Exercise: Adopt a healthy eating plan and increase physical activity. Aim for at least 300 minutes of moderate-intensity exercise per week.</li>
+            <li>Behavioral Changes: Identify and modify behaviors that contribute to weight gain, such as emotional eating.</li>
+            <li>Monitor Health: Regularly check blood pressure, cholesterol, and glucose levels.</li>
+            <li>Small Changes: Make small, sustainable changes to your diet and lifestyle rather than drastic, short-term fixes.</li>
+          </ul>
+          `
           }
           else if(bmi>=35){
             document.getElementById("bg-color").style.backgroundColor="red"
+            document.getElementById("suggestions").innerHTML=`
+          <h4 class=" text-center text-danger">You should eat less!</h4>`
+          document.getElementById('result').innerHTML=`
+          <h1 class="text-danger  ml-5" style="color:orange;">Extremely Obese (BMI ≥ 40)</h1>
+          <ul class="text-danger ml-5" style="font-size:1.1rem;">
+            <li>Medical Supervision: Seek medical advice for a comprehensive weight loss plan, which may include dietary changes, exercise, medication, or surgery.</li>
+            <li>Nutrient-Dense Foods: Focus on low-calorie, nutrient-dense foods such as vegetables, fruits, lean proteins, and whole grains.</li>
+            <li>Consistent Activity: Start with low-impact exercises like walking, swimming, or water aerobics to minimize strain on joints.</li>
+            <li>Mental Health: Address any emotional or psychological issues that may be contributing to obesity with the help of a counselor or therapist.</li>
+            <li>Support System: Build a support network of family, friends, or support groups to help you stay motivated and accountable.</li>
+          </ul>
+          `
             }
+        
+          }
     }
     </script>
   </body>
