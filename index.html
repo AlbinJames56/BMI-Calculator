@@ -30,10 +30,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container-fuild bg-dark p-5">
+    <div class="container-fuild  p-5" id="bg-color">
       <div class="container m-5">
-        <h1 class="text-light">Body Mass Index (BMI) Calculator</h1>
-        <p class="text-light">
+        <h1 class=" ">Body Mass Index (BMI) Calculator</h1>
+        <p class=" ">
           The Body Mass Index (BMI) helps in calculating the height-to-weight
           ratio of a person. The score determines if a person is at his/her
           healthy weight or needs to shed or gain more kilos. A BMI calculator
@@ -43,7 +43,7 @@
         <div class="row border p-5 bg-light m-5">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-6 d-flex align-items-center">
+                    <div class="col-md-6 mt-5 pt-5 d-flex align-items-center">
                         <div class="col-md-4">Gender</div>
                         <div class="col-md-4 middle d-flex">
                         <label class="d-flex align-items-center mr-2">
@@ -63,23 +63,24 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">Age</div>
-                    <div class="col-md-8"><input type="text" name="age" id="age" class="form-control"></div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-2">Height</div>
-                    <div class="col-md-8 position-relative">
-                        <input type="text" class="form-control pr-4" name="height" id="height">
-                        <span class="unit">cm</span>
-                      </div>
+                    <div class="col-md-8"><input type="number" name="age" id="age" class="form-control"></div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-2">Weight</div>
-                    <div class="col-md-8 position-relative">
-                        <input type="text" class="form-control pr-4" name="weight" id="weight">
-                        <span class="unit">Kg</span>
-                      </div>
+                    <div class="col-md-8 input-slider">
+                      <input type="range" min="1" max="200" id="weight" class="form-range" oninput="updateWeightValue(this.value)">
+                      <div class="slider-value" id="weightValue">70 Kg</div>
+                    </div>
                 </div>
                 <div class="row mt-2">
+                    <div class="col-md-2">Height</div>
+                    
+                    <div class="col-md-8 input-slider mb-5">
+                      <input type="range" min="50" max="230" id="height" class="form-range" oninput="updateHeightValue(this.value)">
+                      <div class="slider-value" id="heightValue">170 cm</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
                     <div class="col-md-5"></div>
                     <div class="col-md-5 position-relative">
                         <button class="btn btn-primary " onclick="calculateBmi()">Calculate</button>
@@ -95,7 +96,7 @@
                     <img width="400px" src="./images/meter.png" alt="">
                 </div>
                 <div class="neddle d-flex justify-content-center p-3">
-                    <img id="needle" width="50px" src="./images/needle.png" alt="">
+                    <img id="needle" width="60px" src="./images/needle.png" alt="">
                 </div>
             </div>
            
@@ -104,9 +105,19 @@
       </div>
     </div>
     <script>
+
+       function updateHeightValue(value) {
+    document.getElementById('heightValue').innerText = value + ' cm';
+  }
+
+  function updateWeightValue(value) {
+    document.getElementById('weightValue').innerText = value + ' Kg';
+  }
         function calculateBmi(){
             var height = document.getElementById("height").value;
             var weight = document.getElementById("weight").value;
+            var age = document.getElementById("age").value;
+            
             var heightInMeter=height/100;
             var bmi = weight / (heightInMeter * heightInMeter);
             bmi = bmi.toFixed(2);
@@ -125,10 +136,26 @@
       } else if (bmiValue > maxBmi) {
         angle = maxAngle;
       }
-
+      
       // Apply the rotation to the needle
       var needle = document.getElementById("needle");
-      needle.style.transform = `translateY(-185px) rotate(${angle}deg)`;
+      needle.style.transform = `translateY(-205px) rotate(${angle}deg)`;
+
+      if(bmi<18.5){
+        document.getElementById("bg-color").style.backgroundColor="blue"
+      }
+      else if(bmi>=18.5 && bmi<24){
+        document.getElementById("bg-color").style.backgroundColor="green"
+        }
+        else if(bmi>=25&&bmi<=29){
+          document.getElementById("bg-color").style.backgroundColor="yellow"
+        }
+        else if(bmi>=30 && bmi<34.9){
+          document.getElementById("bg-color").style.backgroundColor="orange"
+          }
+          else if(bmi>=35){
+            document.getElementById("bg-color").style.backgroundColor="red"
+            }
     }
     </script>
   </body>

@@ -15,11 +15,7 @@
 .middle input[type="radio"]:checked + .box span {
   color: rgb(255, 255, 255);
   transform: translateY(10px);
-}
-/* .middle input[type="radio"]:checked + .box span:before {
-  transform: translateY(100px);
-  opacity: 1;
-} */
+} 
 
 .middle .box {
   width: 100px;
@@ -74,7 +70,24 @@
 
  }
  #needle{
-  transform: translateY(-185px) rotate(-90deg);
+  transform: translateY(-210px) rotate(-90deg);
    transform-origin: bottom center; 
    transition: transform 0.5s ease-out;
  } 
+
+ .input-slider {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+.input-slider input[type="range"] {
+  width: 100%;
+}
+.input-slider .slider-value {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -25px;
+  font-weight: bold;
+  color: #004085;
+}
