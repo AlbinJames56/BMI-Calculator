@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <title>Body Mass Index (BMI) Calculator</title>
+
+    <!-- bootdtrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container-fuild bg-dark p-5">
+      <div class="container m-5">
+        <h1 class="text-light">Body Mass Index (BMI) Calculator</h1>
+        <p class="text-light">
+          The Body Mass Index (BMI) helps in calculating the height-to-weight
+          ratio of a person. The score determines if a person is at his/her
+          healthy weight or needs to shed or gain more kilos. A BMI calculator
+          is widely used as a general tool to assess if a person has a healthy
+          body weight proportional to their height.
+        </p>
+        <div class="row border p-5 bg-light m-5">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="col-md-4">Gender</div>
+                        <div class="col-md-4 middle d-flex">
+                        <label class="d-flex align-items-center mr-2">
+                            <input type="radio" name="radio" />
+                            <div class="male box" active>
+                            <span>Male</span>
+                            </div>
+                        </label>
+                        <label class="d-flex align-items-center">
+                            <input type="radio" name="radio" />
+                            <div class="Female box">
+                            <span>Female</span>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Age</div>
+                    <div class="col-md-8"><input type="text" name="age" id="age" class="form-control"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-2">Height</div>
+                    <div class="col-md-8 position-relative">
+                        <input type="text" class="form-control pr-4" name="height" id="height">
+                        <span class="unit">cm</span>
+                      </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-2">Weight</div>
+                    <div class="col-md-8 position-relative">
+                        <input type="text" class="form-control pr-4" name="weight" id="weight">
+                        <span class="unit">Kg</span>
+                      </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-5 position-relative">
+                        <button class="btn btn-primary " onclick="calculateBmi()">Calculate</button>
+                      </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <h5 class="text-center">Your Body Wight Ratio(BMI) is </h5>
+                    <div class="border rounded bg-info text-light text-center my-auto mx-auto p-1 mt-4" id="bmi">0</div>
+                </div>
+                <div class="scale d-flex justify-content-center p-3">
+                    <img width="400px" src="./images/meter.png" alt="">
+                </div>
+                <div class="neddle d-flex justify-content-center p-3">
+                    <img id="needle" width="50px" src="./images/needle.png" alt="">
+                </div>
+            </div>
+           
+          
+        </div>
+      </div>
+    </div>
+    <script>
+        function calculateBmi(){
+            var height = document.getElementById("height").value;
+            var weight = document.getElementById("weight").value;
+            var heightInMeter=height/100;
+            var bmi = weight / (heightInMeter * heightInMeter);
+            bmi = bmi.toFixed(2);
+
+            document.getElementById("bmi").innerHTML = bmi;
+
+            var minBmi = 15; // Minimum BMI
+      var maxBmi = 41; // Maximum BMI
+      var minAngle = -90; // Angle for min BMI
+      var maxAngle = 90; // Angle for max BMI
+
+      var bmiValue = parseFloat(bmi);
+      var angle = (bmiValue - minBmi) * (maxAngle - minAngle) / (maxBmi - minBmi) + minAngle;
+      if (bmiValue < minBmi) {
+        angle = minAngle;
+      } else if (bmiValue > maxBmi) {
+        angle = maxAngle;
+      }
+
+      // Apply the rotation to the needle
+      var needle = document.getElementById("needle");
+      needle.style.transform = `translateY(-185px) rotate(${angle}deg)`;
+    }
+    </script>
+  </body>
+</html>
